@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thu vien ngay thang</title>
+    <script>
+        /*
+               Cấu trúc ngày tháng:
+               myDate['year'] = 2020
+               myDate['month'] = 10
+               myDate['day'] = 20
+
+         */
+        let mylistDate = new  Array();
+        // Hiện giá trị ngày tháng
+        function toString(date,option='/') {
+            return date['day'] + option + date['month'] + option + date['year'];
+        }
+        // Check năm nhuận
+        function checkLeapyear(d){
+            return (d['year'] % 400 === 0)
+                || (d['year'] % 4 === 0 && d['year'] % 100 !== 0);
+        }
+        // Check tính hợp lệ ngày tháng
+        function checkValidation(d) {
+            switch (d['month']) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    if (d['day'] >= 1 && d['day'] <= 31)
+                        return true;
+                    else
+                        return false;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    if (d['day'] >= 1 && d['day'] <= 30)
+                        return true;
+                    else
+                        return false;
+                case 2: let maxDay;
+
+                    if(checkLeapyear(d))
+                        maxDay = 29;
+                    else
+                        maxDay = 28;
+                    if (d['day'] >= 1 && d['day'] <= maxDay)
+                        return true;
+                    else
+                        return false;
+                default: return false;
+            }
+        }
+        // So sánh giá trị ngày tháng
+        function compareDate(d1,d2){
+            if (d1['year'] < d2['year'])
+                return -1;
+            else
+            if (d1['year'] > d2['year'])
+                return 1;
+            else
+            if (d1['month'] < d2['month'])
+                return -1;
+            else
+            if (d1['month'] > d2['month'])
+                return 1;
+            else
+            if (d1['day'] < d2['day'])
+                return -1;
+            else
+            if (d1['day'] > d2['day'])
+                return 1;
+            else
+                return 0;
+        }
+        // Khởi tạo danh sách ngày tháng
+        function initistDate(myList, n = 10) {
+            let i;
+            for (i = 0; i < n; i++){
+                let tmpDate = new Array();
+                tmpDate['year'] = 1900 + Math.round(Math.random()*200);
+                tmpDate['month'] = 1 + Math.round(Math.random()*11);
+                do {
+                    tmpDate['day'] = 1 + Math.round(Math.random()* 30);
+                } while (!checkValidation(tmpDate));
+                myList.push(tmpDate);
+            }
+        }
+        // Hiện danh sách ngày tháng
+        function showListDate(myList){
+            let x;
+            for (x in myList){
+                document.write('<br>' + toString(myList[x]));
+            }
+        }
+        // Sắp xếp
+        function sortListDate(myList){
+            myList.sort(function (d1,d2){
+                return compareDate(d1,d2)
+            })
+        }
+        function main(){
+            myDate = new Array();
+            myDate['year'] = 2023
+            myDate['month'] = 10
+            myDate['day'] = 3
+            yourDate = new Array();
+            yourDate['year'] = 2021
+            yourDate['month'] = 5
+            yourDate['day'] = 4
+            document.write(toString(myDate));
+            document.write('<br>');
+            document.write(toString(yourDate));
+            document.write('<br>');
+            if (compareDate(myDate, yourDate) === 1)
+                document.write('myDate lớn hơn yourDate')
+            else
+                document.write('myDate không lớn hơn yourDate')
+            document.write('<br>');
+            if (checkValidation(myDate))
+                document.write('Ngày hợp lệ')
+            else
+                document.write('Ngày không hợp lệ')
+            initistDate(mylistDate);
+            sortListDate(mylistDate);
+            showListDate(mylistDate);
+        }
+        main();
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>
